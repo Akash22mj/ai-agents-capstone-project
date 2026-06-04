@@ -803,7 +803,7 @@
 import os
 import sys
 
-# 🔴 SYSTEM PATH INJECTION: Forces the cloud server to read your local folder structures safely
+# 🔴 STEP 1: FORCE PATH INJECTION AT THE ABSOLUTE TOP BEFORE ANY OTHER IMPORTS
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -814,8 +814,6 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 from openai import AsyncOpenAI
-import os
-import asyncio
 import threading
 from dotenv import load_dotenv
 
@@ -833,7 +831,6 @@ def start_floor_thread():
     try:
         import titan_floor
         import asyncio
-        # Safely calls your floor script main automation loop inside memory
         asyncio.run(titan_floor.main_automation_loop())
     except Exception as e:
         print(f"Trading Floor Background Process Engine Status: {e}")
@@ -1060,7 +1057,8 @@ def trigger_market_shock_event(event_type: str):
     except Exception as e:
         return f"Shock Controller Malfunction: {e}"
 
-with gr.Blocks(css=premium_light_css, js=force_light_js) as app:
+# 🔴 STEP 2: REMOVE CSS/JS FROM BLOCKS CONSTRUCTOR FOR GRADIO 6.0 COMPATIBILITY
+with gr.Blocks() as app:
     with gr.Row(elem_id="master-header"):
         with gr.Column(): gr.Markdown("# 🎓 Titan Corporate Executive Network — Multi-Agent System")
 
@@ -1186,18 +1184,14 @@ with gr.Blocks(css=premium_light_css, js=force_light_js) as app:
     global_timer = gr.Timer(value=3.0)
     global_timer.tick(fn=fetch_global_market_status, outputs=[market_table, vault_table, leaderboard_plot], show_progress="hidden", queue=False)
 
-# 🔴 THE INTERCEPT FIX FOR RENDER CLOUD NETWORKS
-# 🔴 REPLACE THE VERY BOTTOM OF YOUR titan_app.py WITH THIS:
+# 🔴 STEP 3: MIGRATE CSS AND JS STRINGS TO THE .LAUNCH() WRAPPER FOR PRODUCTION
 if __name__ == "__main__":
-    import os
-    # Render always sets an environment variable named PORT. 
-    # If it's not found (like when you run it at home), it defaults to 10000.
     server_port = int(os.environ.get("PORT", 10000))
-    
-    print(f"🎬 Launching production platform on port {server_port}...")
-    
+    print(f"🎬 Initiating full-screen light production platform on port {server_port}...")
     app.launch(
         server_name="0.0.0.0",
         server_port=server_port,
-        prevent_thread_lock=True
+        prevent_thread_lock=True,
+        css=premium_light_css,
+        js=force_light_js
     )
