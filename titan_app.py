@@ -800,6 +800,13 @@
 
 # Github develpoed code
 
+import os
+import sys
+
+# 🔴 SYSTEM PATH INJECTION: Forces the cloud server to read your local folder structures safely
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import gradio as gr
 import sqlite3
 import json
