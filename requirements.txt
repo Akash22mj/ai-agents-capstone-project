@@ -1,0 +1,6 @@
+gradio>=6.16.0
+pandas
+plotly
+openai
+python-dotenv
+httpx
