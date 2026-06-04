@@ -1180,9 +1180,15 @@ with gr.Blocks(css=premium_light_css, js=force_light_js) as app:
     global_timer.tick(fn=fetch_global_market_status, outputs=[market_table, vault_table, leaderboard_plot], show_progress="hidden", queue=False)
 
 # 🔴 THE INTERCEPT FIX FOR RENDER CLOUD NETWORKS
+# 🔴 REPLACE THE VERY BOTTOM OF YOUR titan_app.py WITH THIS:
 if __name__ == "__main__":
-    server_port = int(os.environ.get("PORT", 7860))
-    print(f"🎬 Initiating full-screen light production platform on port {server_port}...")
+    import os
+    # Render always sets an environment variable named PORT. 
+    # If it's not found (like when you run it at home), it defaults to 10000.
+    server_port = int(os.environ.get("PORT", 10000))
+    
+    print(f"🎬 Launching production platform on port {server_port}...")
+    
     app.launch(
         server_name="0.0.0.0",
         server_port=server_port,
